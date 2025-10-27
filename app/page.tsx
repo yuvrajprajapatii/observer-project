@@ -1,13 +1,13 @@
 // app/page.tsx
-import { Navbar } from '@/components/ui/Navbar'
-import { Hero } from '@/components/ui/Hero'
-import { Mission } from '@/components/ui/Mission'
-import { Features } from '@/components/ui/Features'
-import { HowItWorks } from '@/components/ui/HowItWorks'
-import { Steps } from '@/components/ui/Steps'
-import { Testimonials } from '@/components/ui/Testimonials'
-import { CTA } from '@/components/ui/CTA'
-import { Footer } from '@/components/ui/Footer'
+import Navbar from '@/components/ui/Navbar'
+import Hero from '@/components/ui/Hero'
+import Mission from '@/components/ui/Mission'
+import Features from '@/components/ui/Features'
+import HowItWorks from '@/components/ui/HowItWorks'
+import Steps from '@/components/ui/Steps'
+import Testimonials from '@/components/ui/Testimonials'
+import CTA from '@/components/ui/CTA'
+import Footer from '@/components/ui/Footer'
 
 export default function Home() {
   return (
