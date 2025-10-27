@@ -6,21 +6,18 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 import bcryptjs from 'bcryptjs'
 import prisma from '@/lib/db/connection'
 
-export const authOptions = {
+const authOptions = {
   providers: [
-    // Google OAuth
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || '',
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
     }),
 
-    // GitHub OAuth
     GitHubProvider({
       clientId: process.env.GITHUB_CLIENT_ID || '',
       clientSecret: process.env.GITHUB_CLIENT_SECRET || '',
     }),
 
-    // Email/Password Login
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
@@ -38,11 +35,11 @@ export const authOptions = {
           })
 
           if (!user) {
-            throw new Error('No user found with this email')
+            throw new Error('No user found')
           }
 
           if (!user.passwordHash) {
-            throw new Error('Please use OAuth to login')
+            throw new Error('Use OAuth to login')
           }
 
           const isPasswordValid = await bcryptjs.compare(
@@ -58,10 +55,9 @@ export const authOptions = {
             id: user.id,
             email: user.email,
             name: user.name,
-            image: user.image,
           }
         } catch (error) {
-          console.error('[AUTH_CREDENTIALS]', error)
+          console.error('[AUTH_ERROR]', error)
           throw error
         }
       },
@@ -74,13 +70,9 @@ export const authOptions = {
   },
 
   callbacks: {
-    async jwt({ token, user, account }) {
+    async jwt({ token, user }) {
       if (user) {
         token.id = user.id
-        token.email = user.email
-      }
-      if (account) {
-        token.provider = account.provider
       }
       return token
     },
@@ -88,8 +80,6 @@ export const authOptions = {
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string
-        ;(session.user as unknown as { provider: string }).provider =
-          token.provider
       }
       return session
     },
@@ -98,7 +88,6 @@ export const authOptions = {
       try {
         if (!user.email) return false
 
-        // Find or create user
         let existingUser = await prisma.user.findUnique({
           where: { email: user.email },
         })
@@ -108,9 +97,7 @@ export const authOptions = {
             data: {
               email: user.email,
               name: user.name || 'User',
-              image: user.image,
               role: 'STUDENT',
-              passwordHash: null,
             },
           })
         }
@@ -132,4 +119,5 @@ export const authOptions = {
 }
 
 const handler = NextAuth(authOptions)
+
 export { handler as GET, handler as POST }
