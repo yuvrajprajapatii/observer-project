@@ -1,4 +1,6 @@
 // lib/db/connection.ts
+// Singleton pattern for PrismaClient to prevent connection pooling issues
+
 import { PrismaClient } from '@prisma/client'
 
 const prismaClientSingleton = () => {
@@ -6,11 +8,14 @@ const prismaClientSingleton = () => {
 }
 
 declare global {
-  var prisma: undefined | ReturnType<typeof prismaClientSingleton>
+  let prisma: undefined | ReturnType<typeof prismaClientSingleton>
 }
 
 const prisma = globalThis.prisma ?? prismaClientSingleton()
 
-if (process.env.NODE_ENV !== 'production') globalThis.prisma = prisma
-
 export default prisma
+
+// Prevent hot-reload from creating new connections
+if (process.env.NODE_ENV !== 'production') {
+  globalThis.prisma = prisma
+}

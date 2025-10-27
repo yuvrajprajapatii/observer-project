@@ -1,131 +1,135 @@
 // app/api/auth/[...nextauth]/route.ts
-import { NextAuthOptions } from "next-auth"
-import NextAuth from "next-auth"
-import GoogleProvider from "next-auth/providers/google"
-import GitHubProvider from "next-auth/providers/github"
-import AppleProvider from "next-auth/providers/apple"
-import CredentialsProvider from "next-auth/providers/credentials"
-import { PrismaClient } from "@prisma/client"
-import bcrypt from "bcryptjs"
+import NextAuth from 'next-auth'
+import GoogleProvider from 'next-auth/providers/google'
+import GitHubProvider from 'next-auth/providers/github'
+import CredentialsProvider from 'next-auth/providers/credentials'
+import bcryptjs from 'bcryptjs'
+import prisma from '@/lib/db/connection'
 
-const prisma = new PrismaClient()
-
-const options: NextAuthOptions = {
+export const authOptions = {
   providers: [
-    // 🔵 Google OAuth
+    // Google OAuth
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-      allowDangerousEmailAccountLinking: true
+      clientId: process.env.GOOGLE_CLIENT_ID || '',
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
     }),
 
-    // ⚫ GitHub OAuth
+    // GitHub OAuth
     GitHubProvider({
-      clientId: process.env.GITHUB_ID!,
-      clientSecret: process.env.GITHUB_SECRET!,
-      allowDangerousEmailAccountLinking: true
+      clientId: process.env.GITHUB_CLIENT_ID || '',
+      clientSecret: process.env.GITHUB_CLIENT_SECRET || '',
     }),
 
-    // 🖤 Apple OAuth
-    AppleProvider({
-      clientId: process.env.APPLE_ID!,
-      clientSecret: process.env.APPLE_SECRET!,
-      allowDangerousEmailAccountLinking: true
-    }),
-
-    // 📧 Credentials (Email/Password)
+    // Email/Password Login
     CredentialsProvider({
-      name: "Credentials",
+      name: 'Credentials',
       credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" }
+        email: { label: 'Email', type: 'email', placeholder: 'your@email.com' },
+        password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) return null
+        if (!credentials?.email || !credentials?.password) {
+          throw new Error('Invalid credentials')
+        }
 
         try {
           const user = await prisma.user.findUnique({
-            where: { email: credentials.email }
+            where: { email: credentials.email },
           })
 
-          if (!user) return null
+          if (!user) {
+            throw new Error('No user found with this email')
+          }
 
-          const passwordMatch = await bcrypt.compare(
+          if (!user.passwordHash) {
+            throw new Error('Please use OAuth to login')
+          }
+
+          const isPasswordValid = await bcryptjs.compare(
             credentials.password,
-            user.passwordHash || ""
+            user.passwordHash
           )
 
-          if (!passwordMatch) return null
+          if (!isPasswordValid) {
+            throw new Error('Invalid password')
+          }
 
           return {
             id: user.id,
             email: user.email,
             name: user.name,
-            image: user.image
+            image: user.image,
           }
         } catch (error) {
-          console.error("Auth error:", error)
-          return null
+          console.error('[AUTH_CREDENTIALS]', error)
+          throw error
         }
-      }
-    })
+      },
+    }),
   ],
+
   pages: {
-    signIn: "/login",
-    error: "/login"
+    signIn: '/login',
+    error: '/auth/error',
   },
-  session: {
-    strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60
-  },
-  secret: process.env.NEXTAUTH_SECRET,
+
   callbacks: {
     async jwt({ token, user, account }) {
       if (user) {
         token.id = user.id
         token.email = user.email
-        token.provider = account?.provider
+      }
+      if (account) {
+        token.provider = account.provider
       }
       return token
     },
+
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string
-        ;(session.user as any).provider = token.provider
+        ;(session.user as unknown as { provider: string }).provider =
+          token.provider
       }
       return session
     },
-    async signIn({ user, account, profile }) {
+
+    async signIn({ user }) {
       try {
         if (!user.email) return false
 
-        // Check if user exists
+        // Find or create user
         let existingUser = await prisma.user.findUnique({
-          where: { email: user.email }
+          where: { email: user.email },
         })
 
-        // If user doesn't exist, create one
         if (!existingUser) {
           existingUser = await prisma.user.create({
             data: {
               email: user.email,
-              name: user.name || profile?.name || "User",
-              image: user.image || profile?.image,
-              role: "STUDENT",
-              passwordHash: null // OAuth users don't have passwords
-            }
+              name: user.name || 'User',
+              image: user.image,
+              role: 'STUDENT',
+              passwordHash: null,
+            },
           })
         }
 
         return true
       } catch (error) {
-        console.error("SignIn callback error:", error)
+        console.error('[AUTH_SIGNIN]', error)
         return false
       }
-    }
+    },
   },
-  debug: false
+
+  session: {
+    strategy: 'jwt',
+    maxAge: 30 * 24 * 60 * 60,
+  },
+
+  secret: process.env.NEXTAUTH_SECRET,
 }
 
-const handler = NextAuth(options)
+const handler = NextAuth(authOptions)
 export { handler as GET, handler as POST }
