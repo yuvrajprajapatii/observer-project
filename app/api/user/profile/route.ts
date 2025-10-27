@@ -1,7 +1,7 @@
 // app/api/user/profile/route.ts
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth/next'
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'
+import { authOptions } from '@/lib/auth-config'
 import prisma from '@/lib/db/connection'
 
 export async function GET() {
@@ -14,12 +14,7 @@ export async function GET() {
 
     const user = await prisma.user.findUnique({
       where: { email: session.user.email },
-      select: {
-        id: true,
-        email: true,
-        name: true,
-        role: true,
-      },
+      select: { id: true, email: true, name: true, role: true },
     })
 
     if (!user) {
