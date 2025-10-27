@@ -1,0 +1,135 @@
+/* globals.css
+   - Loads primary font (Nunito) with fallbacks.
+   - Includes Tailwind base, components, and utilities.
+   - Defines core design tokens and reusable helpers for dashboard components.
+*/
+
+/* Load Nunito font from Google */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap');
+
+/* Tailwind base layers */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------- Design tokens & theme variables ---------- */
+:root {
+  --bg: #f8fafc;           /* Page background */
+  --panel: #ffffff;        /* Card / panel surface */
+  --text: #0b0b0b;         /* Primary text color */
+  --muted: #6b7280;        /* Muted text / labels */
+  --brand-dark: #111827;   /* Brand dark color */
+  --accent-green: #16a34a; /* Green accent */
+  --accent-yellow: #f59e0b;/* Yellow accent */
+  --accent-red: #ef4444;   /* Red accent */
+  --glass-border: rgba(15,15,15,0.06); /* Glass effect border */
+}
+
+/* Dark mode overrides */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #070707;
+    --panel: #0b0b0b;
+    --text: #e9e9e9;
+    --muted: #9ca3af;
+    --brand-dark: #ffffff;
+    --glass-border: rgba(255,255,255,0.04);
+  }
+}
+
+/* ---------- Base page styles ---------- */
+html, body, #__next {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Nunito', 'Nunito Sans', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.45;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Utility: balanced text wrapping */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* ---------- Component helpers ---------- */
+/* Card surface with rounded corners, shadow, and glass effect */
+.card-surface {
+  border-radius: 14px;
+  background: var(--panel);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 8px 30px rgba(4,4,5,0.06);
+  border: 1px solid var(--glass-border);
+}
+
+/* Header icons: small circular buttons for profile/settings/notifications */
+.header-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--panel);
+  border: 1px solid var(--glass-border);
+}
+
+/* Subject map container sizing */
+.subject-map-svg {
+  width: 100%;
+  height: 260px;
+  display: block;
+}
+
+/* Refine CTA button: gradient, rounded, bold */
+.refine-cta {
+  background: linear-gradient(90deg, rgba(16,185,129,1), rgba(4,120,87,1));
+  color: white;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-weight: 700;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+/* Small elevation shadow utility */
+.elevation-sm {
+  box-shadow: 0 6px 18px rgba(8,8,10,0.05);
+}
+
+/* Rounded pill badge for minimal highlights */
+.pill-badge {
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0,0,0,0.04);
+  color: var(--brand-dark);
+}
+
+/* Accessibility: visually hidden content */
+.visually-hidden {
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}
+
+/* ---------- Responsive tweaks ---------- */
+@media (max-width: 640px) {
+  .subject-map-svg { height: 200px; }
+  .header-icon { width: 40px; height: 40px; border-radius: 8px; }
+}

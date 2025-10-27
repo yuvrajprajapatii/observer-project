@@ -1,0 +1,344 @@
+// prisma/schema.prisma
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// =======================
+// Models (kept your original definitions)
+// =======================
+
+model User {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  email         String    @unique
+  emailVerified DateTime?
+  name          String?
+  image         String?
+  passwordHash  String?
+  role          String    @default("STUDENT")
+  age           Int?
+  grade         Int?
+  location      String?
+  preferredLang String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  lastLoginAt   DateTime?
+
+  interestDiscoveryCompleted Boolean @default(false)
+  interestProfile Json?
+  subjectSynergy  Json?
+  learningStyle   String?
+  interests       String[]
+  aspirations     Json?
+  constraints     Json?
+  motivationalSignals Json?
+  lastRefinedAt   DateTime?
+
+  accounts             Account[]
+  sessions             Session[]
+  progress             UserProgress?
+  assessments          AssessmentResponse[]
+  roadmaps             UserRoadmap[]
+  educationContent     EducationContent[]
+  roadmapItems         RoadmapItem[]
+  mentorships          Mentorship[]
+  feedback             PlatformFeedback[]
+  lessonCompletions    LessonCompletion[]
+  enrollments          PathEnrollment[]
+  quizAttempts         QuizAttempt[]
+  profileRefinements   ProfileRefinement[]
+}
+
+model Account {
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.String
+  access_token      String? @db.String
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.String
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  sessionToken String   @unique
+  userId       String   @db.ObjectId
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model UserProgress {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId           String   @unique @db.ObjectId
+  currentPhase     String   @default("discovery")
+  subjectsExplored String[]
+  resourcesViewed  String[]
+  milestonesHit    Int      @default(0)
+  engagementScore  Int      @default(0)
+  consistencyDays  Int      @default(0)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model AssessmentResponse {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String   @db.ObjectId
+  answers     Json
+  score       Int?
+  insights    Json?
+  completedAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model UserRoadmap {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String   @db.ObjectId
+  milestones  Json
+  progress    Int      @default(0)
+  generatedAt DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ProfileRefinement {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String   @db.ObjectId
+  entry      Json
+  createdAt  DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model LearningPath {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  category    String
+  difficulty  String
+  duration    Int
+  thumbnail   String?
+  tags        String[]
+  isPublished Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  modules     Module[]
+  enrollments PathEnrollment[]
+}
+
+model Module {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  pathId      String   @db.ObjectId
+  title       String
+  description String
+  order       Int
+  duration    Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  path    LearningPath @relation(fields: [pathId], references: [id], onDelete: Cascade)
+  lessons Lesson[]
+  quizzes Quiz[]
+}
+
+model Lesson {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  moduleId    String   @db.ObjectId
+  title       String
+  content     String   @db.String
+  videoUrl    String?
+  duration    Int
+  order       Int
+  resources   Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  module      Module @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  completions LessonCompletion[]
+}
+
+model Quiz {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  moduleId     String   @db.ObjectId
+  title        String
+  description  String?
+  timeLimit    Int?
+  passingScore Int      @default(70)
+  order        Int
+  isPublished  Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  module    Module @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  questions QuizQuestion[]
+  attempts  QuizAttempt[]
+}
+
+model QuizQuestion {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  quizId        String   @db.ObjectId
+  question      String   @db.String
+  type          String
+  options       Json?
+  correctAnswer String   @db.String
+  explanation   String?  @db.String
+  points        Int      @default(1)
+  order         Int
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  quiz    Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  answers QuizAnswer[]
+}
+
+model QuizAttempt {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  quizId      String   @db.ObjectId
+  userId      String   @db.ObjectId
+  score       Float
+  totalPoints Int
+  isPassed    Boolean
+  timeSpent   Int?
+  startedAt   DateTime @default(now())
+  completedAt DateTime?
+
+  quiz    Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  user    User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  answers QuizAnswer[]
+}
+
+model QuizAnswer {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  attemptId    String   @db.ObjectId
+  questionId   String   @db.ObjectId
+  answer       String   @db.String
+  isCorrect    Boolean
+  pointsEarned Int      @default(0)
+  createdAt    DateTime @default(now())
+
+  attempt  QuizAttempt  @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  question QuizQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+}
+
+model PathEnrollment {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId         String   @db.ObjectId
+  pathId         String   @db.ObjectId
+  progress       Int      @default(0)
+  status         String   @default("IN_PROGRESS")
+  enrolledAt     DateTime @default(now())
+  completedAt    DateTime?
+  lastAccessedAt DateTime @default(now())
+
+  user User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  path LearningPath @relation(fields: [pathId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, pathId])
+}
+
+model LessonCompletion {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String   @db.ObjectId
+  lessonId    String   @db.ObjectId
+  completedAt DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lesson Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, lessonId])
+}
+
+model EducationContent {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String   @db.ObjectId
+  subject       String
+  title         String
+  description   String?
+  source        String
+  url           String
+  type          String
+  duration      Int?
+  learningStyle String[]
+  difficulty    String
+  relevance     Int
+  year          Int?
+  sequenceOrder Int
+  createdAt     DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model RoadmapItem {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String   @db.ObjectId
+  year            Int
+  ageOrGrade      Int
+  phase           String
+  study           Json
+  projects        String[]
+  competitions    String[]
+  skills          String[]
+  mentorshipFocus String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Mentorship {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  studentId    String   @db.ObjectId
+  mentorName   String
+  mentorEmail  String?
+  expertise    String[]
+  bio          String?
+  availability String?
+  status       String   @default("CONNECTED")
+  connectedAt  DateTime?
+  createdAt    DateTime @default(now())
+
+  student User @relation(fields: [studentId], references: [id], onDelete: Cascade)
+}
+
+model PlatformFeedback {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String   @db.ObjectId
+  category     String
+  title        String
+  description  String   @db.String
+  resourceLink String?
+  status       String   @default("SUBMITTED")
+  upvotes      Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}

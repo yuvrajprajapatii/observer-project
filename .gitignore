@@ -1,0 +1,52 @@
+# Dependencies
+node_modules/
+.pnpm-debug.log*
+.yarn/
+.npm/
+
+# Next.js
+.next/
+out/
+build/
+dist/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Database
+*.db
+*.sqlite
+prisma/migrations/dev.db
+prisma/*.db
+prisma/migrations/*.db
+prisma/migrations/*.db-journal
+
+# Logs
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+coverage/
+.nyc_output/
+
+# Temporary files
+.tmp/
+temp/
+
+# Development files
+coolise.txt
+ctrl-coolise.txt
+ctrl-response.txt
+middleware.is

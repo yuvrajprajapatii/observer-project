@@ -1,0 +1,15 @@
+# Ignore built stuff and locks
+node_modules
+.next
+out
+build
+dist
+coverage
+
+# Logs and env
+*.log
+.env*
+
+# Locks (npm generates)
+package-lock.json
+pnpm-lock.yaml
