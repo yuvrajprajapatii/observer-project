@@ -75,6 +75,7 @@ export default function Hero() {
 
     // Resize canvas to match client size
     function resize() {
+      if (!canvas) return
       width = canvas.clientWidth
       height = canvas.clientHeight
       canvas.width = Math.round(width * dpr)
