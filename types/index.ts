@@ -7,12 +7,11 @@
 
 import {
   User,
-  Assessment,
-  CareerPath,
-  Resource,
-  Recommendation,
+  AssessmentResponse,
+  LearningPath,
+  EducationContent,
   UserProgress,
-  Feedback,
+  PlatformFeedback,
 } from '@prisma/client'
 
 // ============= API Wrappers =============
@@ -92,14 +91,14 @@ export interface AssessmentResult {
   recommendations: string[]
 }
 
-export interface AssessmentWithResults extends Assessment {
+export interface AssessmentWithResults extends AssessmentResponse {
   parsedResults?: AssessmentResult
 }
 
 // ============= Career Paths & Roadmaps =============
 // Extended Prisma types with match scores, milestones, and user interaction
 
-export interface CareerPathWithDetails extends CareerPath {
+export interface CareerPathWithDetails extends LearningPath {
   matchScore?: number
   isRecommended?: boolean
   userInteraction?: {
@@ -141,7 +140,7 @@ export interface ResourceFilter {
   search?: string
 }
 
-export interface ResourceWithMatch extends Resource {
+export interface ResourceWithMatch extends EducationContent {
   matchScore?: number
   relevanceReason?: string
 }
@@ -187,8 +186,18 @@ export interface AIGeneratedPath {
   confidenceScore: number
 }
 
+// Local Recommendation type since it doesn't exist in schema
+export interface Recommendation {
+  id: string
+  userId: string
+  pathId: string
+  matchScore: number
+  createdAt: Date
+  updatedAt: Date
+}
+
 export interface RecommendationWithPath extends Recommendation {
-  careerPath: CareerPath
+  careerPath: LearningPath
 }
 
 // ============= Progress Tracking =============
