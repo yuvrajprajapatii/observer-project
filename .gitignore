@@ -49,4 +49,6 @@ temp/
 coolise.txt
 ctrl-coolise.txt
 ctrl-response.txt
-middleware.is
+middleware.iscookies.txt 
+csrf-cookies.txt 
+csrf-response.txt 
