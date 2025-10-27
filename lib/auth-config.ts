@@ -1,11 +1,15 @@
 // lib/auth-config.ts
+// NextAuth v4.24 Configuration for Observer Project
+// CRITICAL: Using ENUM values instead of strings for strict TypeScript
+
 import GoogleProvider from 'next-auth/providers/google'
 import GitHubProvider from 'next-auth/providers/github'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import bcryptjs from 'bcryptjs'
 import prisma from '@/lib/db/connection'
+import type { NextAuthOptions, SessionStrategy } from 'next-auth'
 
-export const authOptions = {
+export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || '',
@@ -25,7 +29,7 @@ export const authOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          throw new Error('Invalid')
+          throw new Error('Invalid credentials')
         }
 
         const user = await prisma.user.findUnique({
@@ -90,8 +94,9 @@ export const authOptions = {
     },
   },
 
+  // CRITICAL FIX: Use proper NextAuthOptions type to enforce correct types
   session: {
-    strategy: 'jwt',
+    strategy: 'jwt' as SessionStrategy,
     maxAge: 30 * 24 * 60 * 60,
   },
 
