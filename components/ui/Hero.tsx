@@ -66,10 +66,10 @@ export default function Hero(): JSX.Element {
     let fade = 1
 
     function resize() {
-      width = canvas.clientWidth || 0
-      height = canvas.clientHeight || 0
-      canvas.width = Math.round(width * dpr)
-      canvas.height = Math.round(height * dpr)
+      width = canvas!.clientWidth || 0
+      height = canvas!.clientHeight || 0
+      canvas!.width = Math.round(width * dpr)
+      canvas!.height = Math.round(height * dpr)
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
     }
     resize()
@@ -114,7 +114,7 @@ export default function Hero(): JSX.Element {
       // horizontal depth lines
       ctx.beginPath()
       const maxZ = 1500
-      const step = Math.max(80, Math.floor(maxZ / HORIZONTAL_LINES))
+      const step = HORIZONTAL_LINES > 0 ? Math.max(80, Math.floor(maxZ / HORIZONTAL_LINES)) : maxZ + 1 // Skip loop if no lines
       for (let z = step; z <= maxZ; z += step) {
         const sy = project(z, vpY)
         const depthScale = 1 / (1 + z * 0.0024)
