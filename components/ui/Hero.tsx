@@ -70,7 +70,7 @@ export default function Hero(): JSX.Element {
       height = canvas!.clientHeight || 0
       canvas!.width = Math.round(width * dpr)
       canvas!.height = Math.round(height * dpr)
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+      ctx!.setTransform(dpr, 0, 0, dpr, 0, 0)
     }
     resize()
     window.addEventListener('resize', resize)
@@ -84,7 +84,7 @@ export default function Hero(): JSX.Element {
     }
 
     function drawGrid() {
-      ctx.clearRect(0, 0, width, height)
+      ctx!.clearRect(0, 0, width, height)
 
       const scrollNorm = Math.min(1, scrollY / (window.innerHeight * 0.9))
       tiltTarget = scrollNorm * MAX_TILT
@@ -96,23 +96,23 @@ export default function Hero(): JSX.Element {
       const cx = width * vpX
       const cy = height * vpY
 
-      ctx.lineWidth = 1
-      ctx.strokeStyle = LINE_COLOR
-      ctx.globalAlpha = Math.max(0.06, fade * 0.98)
-      ctx.lineCap = 'round'
+      ctx!.lineWidth = 1
+      ctx!.strokeStyle = LINE_COLOR
+      ctx!.globalAlpha = Math.max(0.06, fade * 0.98)
+      ctx!.lineCap = 'round'
 
       // radial rays
-      ctx.beginPath()
+      ctx!.beginPath()
       for (let i = -RAY_COUNT / 2; i <= RAY_COUNT / 2; i++) {
         const t = i / (RAY_COUNT / 2)
         const baseX = width * (0.5 + t * 1.4)
-        ctx.moveTo(baseX, height + 18)
-        ctx.lineTo(cx, cy)
+        ctx!.moveTo(baseX, height + 18)
+        ctx!.lineTo(cx, cy)
       }
-      ctx.stroke()
+      ctx!.stroke()
 
       // horizontal depth lines
-      ctx.beginPath()
+      ctx!.beginPath()
       const maxZ = 1500
       const step = HORIZONTAL_LINES > 0 ? Math.max(80, Math.floor(maxZ / HORIZONTAL_LINES)) : maxZ + 1 // Skip loop if no lines
       for (let z = step; z <= maxZ; z += step) {
@@ -123,20 +123,20 @@ export default function Hero(): JSX.Element {
         const skew = Math.tan(tiltRad) * 0.26 * (z / maxZ)
         const leftX = cx - halfWidth + skew * 160
         const rightX = cx + halfWidth + skew * 160
-        ctx.moveTo(leftX, sy)
-        ctx.lineTo(rightX, sy)
+        ctx!.moveTo(leftX, sy)
+        ctx!.lineTo(rightX, sy)
       }
-      ctx.stroke()
+      ctx!.stroke()
 
       // soft vignette bottom
-      ctx.globalAlpha = Math.min(0.12, (1 - fade) * 0.5)
-      const g = ctx.createLinearGradient(0, height * 0.6, 0, height)
+      ctx!.globalAlpha = Math.min(0.12, (1 - fade) * 0.5)
+      const g = ctx!.createLinearGradient(0, height * 0.6, 0, height)
       g.addColorStop(0, 'rgba(0,0,0,0)')
       g.addColorStop(1, 'rgba(0,0,0,0.03)')
-      ctx.fillStyle = g
-      ctx.fillRect(0, height * 0.6, width, height * 0.4)
+      ctx!.fillStyle = g
+      ctx!.fillRect(0, height * 0.6, width, height * 0.4)
 
-      ctx.globalAlpha = 1
+      ctx!.globalAlpha = 1
     }
 
     function step() {
