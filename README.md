@@ -53,6 +53,7 @@ observer-project/
 Getting Started (Local)
 
 Prerequisites
+
 - Node.js 18+ (use `nvm` if needed)
 - npm or yarn
 - MongoDB Atlas or local MongoDB
@@ -63,22 +64,28 @@ Setup
 1. Clone the repo
    ```bash
    git clone https://github.com/yuvrajprajapatii/observer-project.git
+
    cd observer-project
 
 Install dependencies
+
 npm install
 
 Set up environment variables:
+
 cp .env.example .env
+
 Configure your environment variables in the .env file.
 
 
 Set up the database:
+
 npx prisma generate
 npx prisma db push
 
 
 Run the development server:
+
 npm run dev
 
 
@@ -87,46 +94,73 @@ Open http://localhost:3000 to view the application.
 Key Features
 
 Implemented
+
 User authentication with multiple providers
+
 Responsive design system
+
 Database models for users and interests
+
 API route structure
 
 In Development
+
 Interest discovery assessment
+
 AI-powered career path recommendations
+
 Personalized learning roadmap
+
 Resource aggregation engine
 
 Planned
+
 Multi-language support
+
 Mentorship matching system
+
 Progress tracking and analytics
+
 Parental dashboard and controls
 
 Security and Privacy
+
 - All sensitive credentials are stored in environment variables (never committed to Git)
+
 - User data is encrypted at rest (MongoDB encryption)
+
 - Authentication uses NextAuth with secure session management
+
 - Parental consent mechanisms for users under 13
+
 - GDPR-compliant data deletion options (planned)
 
 Note: This is a development version. Production deployment will include additional hardening.
 
 Contributing
+
 This project is currently in private development by solo developer Yuvraj Prajapati. Public contributions will be welcomed after the initial release. For collaboration inquiries, please contact the project maintainer.
 
 License
-Proprietary License 
+
+Proprietary License
+ 
 Copyright (c) 2025 Yuvraj Prajapati
+
 This software is currently under private development.
+
 A public license will be specified upon release.
+
 All rights reserved.
 
 Support
+
 For technical support or questions about this project:
+
 Create an issue in the GitHub repository: github.com/yuvrajprajapatii/observer-project
+
 Contact the developer directly via: yuvrajprajapati.com
 
 Complete Vision & Mission
+
 For the complete vision statement, detailed project goals, and the full story behind Observer's mission to transform global education accessibility, visit:project section at yuvrajprajapati.com
