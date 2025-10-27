@@ -6,7 +6,7 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 import bcryptjs from 'bcryptjs'
 import prisma from '@/lib/db/connection'
 
-const authOptions = {
+export const authOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || '',
@@ -21,58 +21,44 @@ const authOptions = {
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
-        email: { label: 'Email', type: 'email', placeholder: 'your@email.com' },
+        email: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          throw new Error('Invalid credentials')
+          throw new Error('Invalid')
         }
 
-        try {
-          const user = await prisma.user.findUnique({
-            where: { email: credentials.email },
-          })
+        const user = await prisma.user.findUnique({
+          where: { email: credentials.email },
+        })
 
-          if (!user) {
-            throw new Error('No user found')
-          }
+        if (!user || !user.passwordHash) {
+          throw new Error('Invalid')
+        }
 
-          if (!user.passwordHash) {
-            throw new Error('Use OAuth to login')
-          }
+        const isValid = await bcryptjs.compare(
+          credentials.password,
+          user.passwordHash
+        )
 
-          const isPasswordValid = await bcryptjs.compare(
-            credentials.password,
-            user.passwordHash
-          )
+        if (!isValid) throw new Error('Invalid')
 
-          if (!isPasswordValid) {
-            throw new Error('Invalid password')
-          }
-
-          return {
-            id: user.id,
-            email: user.email,
-            name: user.name,
-          }
-        } catch (error) {
-          console.error('[AUTH_ERROR]', error)
-          throw error
+        return {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          role: user.role,
         }
       },
     }),
   ],
 
-  pages: {
-    signIn: '/login',
-    error: '/auth/error',
-  },
-
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id
+        token.role = user.role
       }
       return token
     },
@@ -85,28 +71,23 @@ const authOptions = {
     },
 
     async signIn({ user }) {
-      try {
-        if (!user.email) return false
+      if (!user.email) return false
 
-        let existingUser = await prisma.user.findUnique({
-          where: { email: user.email },
+      let existingUser = await prisma.user.findUnique({
+        where: { email: user.email },
+      })
+
+      if (!existingUser) {
+        await prisma.user.create({
+          data: {
+            email: user.email,
+            name: user.name || 'User',
+            role: 'STUDENT',
+          },
         })
-
-        if (!existingUser) {
-          existingUser = await prisma.user.create({
-            data: {
-              email: user.email,
-              name: user.name || 'User',
-              role: 'STUDENT',
-            },
-          })
-        }
-
-        return true
-      } catch (error) {
-        console.error('[AUTH_SIGNIN]', error)
-        return false
       }
+
+      return true
     },
   },
 
@@ -116,8 +97,10 @@ const authOptions = {
   },
 
   secret: process.env.NEXTAUTH_SECRET,
+  pages: {
+    signIn: '/login',
+  },
 }
 
 const handler = NextAuth(authOptions)
-
 export { handler as GET, handler as POST }
