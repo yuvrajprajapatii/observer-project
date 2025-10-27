@@ -1,40 +1,20 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 
-export function Hero() {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
+export default function Hero(): JSX.Element {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null)
 
   useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
+    let mounted = true
+    const dpr = typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1
+    let width = 0
+    let height = 0
+    let rafId = 0
 
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return
-
-    let width = window.innerWidth
-    let height = window.innerHeight
-    const dpr = window.devicePixelRatio || 1
-
-    function resize() {
-      if (!canvas) return
-      width = canvas.clientWidth
-      height = canvas.clientHeight
-      canvas.width = Math.round(width * dpr)
-      canvas.height = Math.round(height * dpr)
-      if (ctx) {
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-      }
-    }
-
-    resize()
-    window.addEventListener('resize', resize)
-
-    const particles: Particle[] = []
-    const particleCount = 50
-
+    // Particle class (kept inside effect to close over width/height)
     class Particle {
       x: number
       y: number
@@ -62,6 +42,7 @@ export function Hero() {
       }
 
       draw(context: CanvasRenderingContext2D) {
+        if (!context) return
         context.fillStyle = 'rgba(16, 185, 129, 0.5)'
         context.beginPath()
         context.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
@@ -69,28 +50,71 @@ export function Hero() {
       }
     }
 
-    for (let i = 0; i < particleCount; i++) {
-      particles.push(new Particle())
+    const particles: Particle[] = []
+    const PARTICLE_COUNT = 50
+
+    function safeGetCanvas(): HTMLCanvasElement | null {
+      return canvasRef.current
     }
 
-    const animate = () => {
-      if (!ctx || !canvas) return
+    function resize() {
+      const canvas = safeGetCanvas()
+      if (!canvas) return
 
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.05)'
-      ctx.fillRect(0, 0, width, height)
+      // get current layout size
+      width = Math.max(1, canvas.clientWidth)
+      height = Math.max(1, canvas.clientHeight)
 
-      particles.forEach((particle) => {
-        particle.update()
-        particle.draw(ctx)
-      })
+      canvas.width = Math.round(width * dpr)
+      canvas.height = Math.round(height * dpr)
 
-      requestAnimationFrame(animate)
+      // always re-get context before using it
+      const context = canvas.getContext('2d')
+      if (!context) return
+      context.setTransform(dpr, 0, 0, dpr, 0, 0)
     }
 
-    animate()
+    function initParticles() {
+      particles.length = 0
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        particles.push(new Particle())
+      }
+    }
+
+    function animate() {
+      const canvas = safeGetCanvas()
+      if (!canvas || !mounted) return
+
+      const context = canvas.getContext('2d')
+      if (!context) return
+
+      try {
+        // semi-transparent white to create trailing effect
+        context.fillStyle = 'rgba(255, 255, 255, 0.05)'
+        context.fillRect(0, 0, width, height)
+
+        for (const p of particles) {
+          p.update()
+          p.draw(context)
+        }
+      } catch (err) {
+        // small guard so one error doesn't kill the RAF loop
+        // console.error('Canvas animation error', err)
+      }
+
+      rafId = requestAnimationFrame(animate)
+    }
+
+    // initial setup
+    resize()
+    initParticles()
+    window.addEventListener('resize', resize)
+    rafId = requestAnimationFrame(animate)
 
     return () => {
+      mounted = false
       window.removeEventListener('resize', resize)
+      if (rafId) cancelAnimationFrame(rafId)
     }
   }, [])
 
@@ -98,7 +122,7 @@ export function Hero() {
     <section className="relative w-full h-screen overflow-hidden bg-gradient-to-b from-white to-slate-50">
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 w-full h-full"
+        className="absolute inset-0 w-full h-full block" // display block helps consistent measurements
       />
 
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white pointer-events-none" />

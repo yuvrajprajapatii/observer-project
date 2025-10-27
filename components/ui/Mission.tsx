@@ -1,20 +1,20 @@
 // components/ui/Mission.tsx
 'use client'
 
-import React from "react"
+import React from 'react'
 
-export default function Mission() {
+export function Mission(): JSX.Element {
   return (
     <section className="w-full bg-[#f6f7f8] py-20">
       <div className="max-w-4xl mx-auto px-6">
         <div
           className="bg-white rounded-2xl shadow-sm p-10 md:p-14 text-center"
-          style={{ fontFamily: "Nunito, system-ui, -apple-system" }}
+          style={{ fontFamily: 'Nunito, system-ui, -apple-system' }}
         >
           <div className="mx-auto mb-6 w-14 h-0.5 bg-gray-200 rounded-full" />
           <h2
             className="text-[1.9rem] md:text-[2.25rem] lg:text-[2.45rem] font-medium text-[#0f1720] mb-4 leading-snug"
-            style={{ letterSpacing: "-0.01em" }}
+            style={{ letterSpacing: '-0.01em' }}
           >
             Our Mission
           </h2>

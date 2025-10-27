@@ -3,16 +3,31 @@
 
 import React, { useEffect, useState } from 'react'
 
-export default function Navbar() {
-  const [stuck, setStuck] = useState(false)
+export function Navbar(): JSX.Element {
+  const [stuck, setStuck] = useState<boolean>(false)
 
   useEffect(() => {
+    // guard for SSR / non-window environments
+    if (typeof window === 'undefined') return
+
+    let mounted = true
+
     const onScroll = () => {
-      const y = window.scrollY || window.pageYOffset
-      setStuck(y > 36)
+      const y = window.scrollY ?? window.pageYOffset ?? 0
+      const next = y > 36
+      // only update when value actually changes to avoid needless renders
+      setStuck((prev) => (prev === next ? prev : next))
     }
+
+    // initial check in case page is already scrolled
+    onScroll()
+
     window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+
+    return () => {
+      mounted = false
+      window.removeEventListener('scroll', onScroll)
+    }
   }, [])
 
   return (

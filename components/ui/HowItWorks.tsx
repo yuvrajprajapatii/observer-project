@@ -1,21 +1,21 @@
 // components/ui/HowItWorks.tsx
-import React from "react"
+import React from 'react'
 
-export default function HowItWorks() {
+export function HowItWorks(): JSX.Element {
   return (
     <section className="bg-[#f6f7f8] py-20">
       <div className="max-w-6xl mx-auto px-6">
         <header className="text-center mb-12">
           <h2
             className="text-3xl md:text-4xl font-medium text-[#0f1720] leading-tight"
-            style={{ fontFamily: "Nunito, system-ui, -apple-system" }}
+            style={{ fontFamily: 'Nunito, system-ui, -apple-system' }}
           >
             How We Help You Succeed
           </h2>
 
           <p
             className="mt-4 text-gray-600 text-base md:text-lg max-w-2xl mx-auto"
-            style={{ fontFamily: "Nunito, system-ui, -apple-system" }}
+            style={{ fontFamily: 'Nunito, system-ui, -apple-system' }}
           >
             A thoughtful, guided path — combining diagnostics, tailored learning plans, global opportunities, and mentor support.
           </p>
@@ -26,18 +26,23 @@ export default function HowItWorks() {
           <article
             className="relative bg-white rounded-2xl border border-gray-100 p-6 md:p-8 transition-transform duration-300 hover:-translate-y-2 hover:shadow-lg"
             aria-labelledby="how-1"
-            style={{ fontFamily: "Nunito, system-ui, -apple-system" }}
+            style={{ fontFamily: 'Nunito, system-ui, -apple-system' }}
           >
             <div className="flex items-center gap-4 mb-4">
               <div
                 className="w-11 h-11 flex items-center justify-center rounded-lg"
                 style={{
-                  background:
-                    "linear-gradient(180deg, rgba(17,24,39,0.03), rgba(17,24,39,0.01))"
+                  background: 'linear-gradient(180deg, rgba(17,24,39,0.03), rgba(17,24,39,0.01))',
                 }}
-                aria-hidden
+                aria-hidden={true}
               >
-                <svg className="w-5 h-5 text-[#111827]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4">
+                <svg
+                  className="w-5 h-5 text-[#111827]"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.4"
+                >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M10 3h4v4h-4zM4 21h16v-2H4zM7 7h10v10H7z" />
                 </svg>
               </div>
@@ -56,18 +61,23 @@ export default function HowItWorks() {
           <article
             className="relative bg-white rounded-2xl border border-gray-100 p-6 md:p-8 transition-transform duration-300 hover:-translate-y-2 hover:shadow-lg"
             aria-labelledby="how-2"
-            style={{ fontFamily: "Nunito, system-ui, -apple-system" }}
+            style={{ fontFamily: 'Nunito, system-ui, -apple-system' }}
           >
             <div className="flex items-center gap-4 mb-4">
               <div
                 className="w-11 h-11 flex items-center justify-center rounded-lg"
                 style={{
-                  background:
-                    "linear-gradient(180deg, rgba(17,24,39,0.03), rgba(17,24,39,0.01))"
+                  background: 'linear-gradient(180deg, rgba(17,24,39,0.03), rgba(17,24,39,0.01))',
                 }}
-                aria-hidden
+                aria-hidden={true}
               >
-                <svg className="w-5 h-5 text-[#111827]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4">
+                <svg
+                  className="w-5 h-5 text-[#111827]"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.4"
+                >
                   <circle cx="12" cy="12" r="9" />
                   <path d="M2 12h20" strokeLinecap="round" />
                 </svg>
@@ -87,18 +97,23 @@ export default function HowItWorks() {
           <article
             className="relative bg-white rounded-2xl border border-gray-100 p-6 md:p-8 transition-transform duration-300 hover:-translate-y-2 hover:shadow-lg"
             aria-labelledby="how-3"
-            style={{ fontFamily: "Nunito, system-ui, -apple-system" }}
+            style={{ fontFamily: 'Nunito, system-ui, -apple-system' }}
           >
             <div className="flex items-center gap-4 mb-4">
               <div
                 className="w-11 h-11 flex items-center justify-center rounded-lg"
                 style={{
-                  background:
-                    "linear-gradient(180deg, rgba(17,24,39,0.03), rgba(17,24,39,0.01))"
+                  background: 'linear-gradient(180deg, rgba(17,24,39,0.03), rgba(17,24,39,0.01))',
                 }}
-                aria-hidden
+                aria-hidden={true}
               >
-                <svg className="w-5 h-5 text-[#111827]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4">
+                <svg
+                  className="w-5 h-5 text-[#111827]"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.4"
+                >
                   <rect x="4" y="5" width="16" height="14" rx="2" />
                 </svg>
               </div>
@@ -117,18 +132,23 @@ export default function HowItWorks() {
           <article
             className="relative bg-white rounded-2xl border border-gray-100 p-6 md:p-8 transition-transform duration-300 hover:-translate-y-2 hover:shadow-lg"
             aria-labelledby="how-4"
-            style={{ fontFamily: "Nunito, system-ui, -apple-system" }}
+            style={{ fontFamily: 'Nunito, system-ui, -apple-system' }}
           >
             <div className="flex items-center gap-4 mb-4">
               <div
                 className="w-11 h-11 flex items-center justify-center rounded-lg"
                 style={{
-                  background:
-                    "linear-gradient(180deg, rgba(17,24,39,0.03), rgba(17,24,39,0.01))"
+                  background: 'linear-gradient(180deg, rgba(17,24,39,0.03), rgba(17,24,39,0.01))',
                 }}
-                aria-hidden
+                aria-hidden={true}
               >
-                <svg className="w-5 h-5 text-[#111827]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4">
+                <svg
+                  className="w-5 h-5 text-[#111827]"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.4"
+                >
                   <path d="M12 2v20" strokeLinecap="round" />
                 </svg>
               </div>
@@ -147,18 +167,23 @@ export default function HowItWorks() {
           <article
             className="relative bg-white rounded-2xl border border-gray-100 p-6 md:p-8 transition-transform duration-300 hover:-translate-y-2 hover:shadow-lg"
             aria-labelledby="how-5"
-            style={{ fontFamily: "Nunito, system-ui, -apple-system" }}
+            style={{ fontFamily: 'Nunito, system-ui, -apple-system' }}
           >
             <div className="flex items-center gap-4 mb-4">
               <div
                 className="w-11 h-11 flex items-center justify-center rounded-lg"
                 style={{
-                  background:
-                    "linear-gradient(180deg, rgba(17,24,39,0.03), rgba(17,24,39,0.01))"
+                  background: 'linear-gradient(180deg, rgba(17,24,39,0.03), rgba(17,24,39,0.01))',
                 }}
-                aria-hidden
+                aria-hidden={true}
               >
-                <svg className="w-5 h-5 text-[#111827]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4">
+                <svg
+                  className="w-5 h-5 text-[#111827]"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.4"
+                >
                   <path d="M8 16l4-8 4 8" strokeLinecap="round" />
                 </svg>
               </div>
@@ -177,18 +202,23 @@ export default function HowItWorks() {
           <article
             className="relative bg-white rounded-2xl border border-gray-100 p-6 md:p-8 transition-transform duration-300 hover:-translate-y-2 hover:shadow-lg"
             aria-labelledby="how-6"
-            style={{ fontFamily: "Nunito, system-ui, -apple-system" }}
+            style={{ fontFamily: 'Nunito, system-ui, -apple-system' }}
           >
             <div className="flex items-center gap-4 mb-4">
               <div
                 className="w-11 h-11 flex items-center justify-center rounded-lg"
                 style={{
-                  background:
-                    "linear-gradient(180deg, rgba(17,24,39,0.03), rgba(17,24,39,0.01))"
+                  background: 'linear-gradient(180deg, rgba(17,24,39,0.03), rgba(17,24,39,0.01))',
                 }}
-                aria-hidden
+                aria-hidden={true}
               >
-                <svg className="w-5 h-5 text-[#111827]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4">
+                <svg
+                  className="w-5 h-5 text-[#111827]"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.4"
+                >
                   <rect x="3" y="3" width="18" height="18" rx="2" />
                 </svg>
               </div>
