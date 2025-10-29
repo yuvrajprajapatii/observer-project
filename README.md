@@ -176,10 +176,13 @@ Observer is a solo-led initiative by Yuvraj Prajapati, focused on rapid prototyp
 By contributing, you join a movement to reshape educational equity.
 
 ## License
-**Proprietary License**  
+  
+This project is licensed under the MIT licence.
+
+See the [LICENCE] file for the complete terms and conditions.
+
 Copyright © 2025 Yuvraj Prajapati  
 
-This software remains under private development. An open-source license (e.g., MIT) will be adopted upon public release to encourage widespread adoption and collaboration. All rights reserved.
 
 ## Support
 We are committed to fostering a supportive community around Observer.
