@@ -177,9 +177,9 @@ By contributing, you join a movement to reshape educational equity.
 
 ## License
   
-This project is licensed under the MIT licence.
+This project is licensed under the MIT license.
 
-See the [LICENCE] file for the complete terms and conditions.
+See the [LICENSE](LICENSE) file for the complete terms and conditions.
 
 Copyright © 2025 Yuvraj Prajapati  
 
