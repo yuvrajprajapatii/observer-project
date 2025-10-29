@@ -37,7 +37,7 @@ We prioritize modern, performant tools to ensure reliability and ease of extensi
 | **Database**   | MongoDB with Prisma ORM     |
 | **Authentication** | NextAuth.js             |
 | **Styling**    | Tailwind CSS                |
-| **Deployment** | Vercel (planned)            |
+| **Deployment** | Vercel                       |
 
 ### Project Structure
 ```
