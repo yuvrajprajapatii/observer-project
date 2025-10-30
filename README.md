@@ -188,11 +188,11 @@ Copyright © 2025 Yuvraj Prajapati
 We are committed to fostering a supportive community around Observer.
 
 - **Report Issues:** [Submit a GitHub Issue](https://github.com/yuvrajprajapatii/observer-project/issues/new)
-- **General Inquiries:** Explore the [project documentation](https://yuvrajprajapati.com/projects/observer) or email support@yuvrajapati.com
+- **General Inquiries:** Explore the [project documentation](https://yuvrajprajapati.com/projects) or email support@yuvrajapati.com
 - **Stay Informed:** Follow updates on [GitHub Releases](https://github.com/yuvrajprajapatii/observer-project/releases) or connect via [LinkedIn](https://linkedin.com/in/yuvrajprajapati).
 
 ### Our Broader Mission
-Discover the full narrative of Observer's drive to advance global education equity in our [dedicated project overview](https://yuvrajprajapati.com/projects/observer).
+Discover the full narrative of Observer's drive to advance global education equity in our [dedicated project overview](https://yuvrajprajapati.com/projects).
 
 ---
 
