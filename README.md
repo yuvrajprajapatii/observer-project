@@ -170,7 +170,7 @@ Security is foundational to Observer's trust model, ensuring user data fuels emp
 ## Contributing
 Observer is a solo-led initiative by Yuvraj Prajapati, focused on rapid prototyping and validation. Upon stable release (Q1 2026), we will open contributions to amplify our impact.
 
-- **Collaboration Opportunities:** If your expertise in AI, education, or full-stack development aligns with our mission, [contact us](https://yuvrajprajapati.com/contact) to discuss partnerships.
+- **Collaboration Opportunities:** If your expertise in AI, education, or full-stack development aligns with our mission, [contact us](https://yuvrajprajapati.com) to discuss partnerships.
 - **Guidelines:** Adhere to GitHub's fork-branch-PR workflow. Detailed instructions in [CONTRIBUTING.md](https://github.com/yuvrajprajapatii/observer-project/blob/main/CONTRIBUTING.md) (available post-release).
 
 By contributing, you join a movement to reshape educational equity.
