@@ -1,200 +1,273 @@
 # Observer
 
-[![Status](https://img.shields.io/badge/Status-Active%20Development-blue)](https://github.com/yuvrajprajapatii/observer-project) [![Next.js](https://img.shields.io/badge/Next.js-14-black?logo=next.js&logoColor=white)](https://nextjs.org/) [![MongoDB](https://img.shields.io/badge/MongoDB-4.4-green?logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![Status](https://img.shields.io/badge/Status-Active%20Development-blue)](https://github.com/yuvrajprajapatii/observer-project)
 
-## AI-Powered Personalized Career Guidance Platform
+## AI-Powered Career Guidance Platform (Early Stage)
 
 ### Overview
-Observer is an AI-driven platform that empowers students from diverse backgrounds to unlock their potential. By leveraging advanced interest mapping, interdisciplinary career pathways, and tailored learning roadmaps, Observer bridges gaps in global education, ensuring equitable access to transformative opportunities.
 
-<details>
-<summary>Explore the Impact Story</summary>
+Observer is an early-stage platform helping students discover career paths aligned with their interests and strengths. Built with modern full-stack technology, Observer provides a foundation for exploring personalized career guidance and learning resources at scale.
 
-Observer was born from a commitment to address systemic barriers in career guidance. In a world where 90% of students lack personalized advice, Observer uses AI to deliver precise, actionable insights—fostering not just careers, but lifelong fulfillment and societal progress. Early pilots have shown a 40% increase in student engagement with STEM fields among underserved communities.
-
-For a deeper dive into real-world applications, [view case studies](https://yuvrajprajapati.com/projects/observer/case-studies) (forthcoming in Phase 2).
-
-</details>
-
-### Vision
-Our mission is to revolutionize career guidance by democratizing access to world-class resources. Observer eliminates geographical and socioeconomic barriers, providing early exposure to global opportunities and interdisciplinary paths. We envision a future where every student, regardless of origin, charts a course toward meaningful impact—driving innovation, equity, and progress on a global scale.
-
-### Current Status
-Observer is under active development, with iterative builds focused on scalability and user-centric design. Our phased approach ensures robust foundations while accelerating toward measurable societal impact.
-
-| Phase | Status     | Key Deliverables |
-|-------|------------|------------------|
-| **Phase 1** | Completed | Secure authentication and scalable database architecture |
-| **Phase 2** | In Progress | AI-driven interest profiling and initial recommendation engine |
-| **Phase 3** | Planned    | Advanced synergy mapping and adaptive roadmap generation |
-
-### Technology Stack
-We prioritize modern, performant tools to ensure reliability and ease of extension.
-
-| Category       | Technology                  |
-|----------------|-----------------------------|
-| **Framework**  | Next.js 14 (App Router)     |
-| **Database**   | MongoDB with Prisma ORM     |
-| **Authentication** | NextAuth.js             |
-| **Styling**    | Tailwind CSS                |
-| **Deployment** | Vercel                       |
-
-### Project Structure
-```
-observer-project/
-├── app/
-│   ├── (auth)/          # Authentication routes
-│   ├── api/             # API endpoints
-│   ├── dashboard/       # User dashboard pages
-│   └── globals.css      # Global styles
-├── components/
-│   ├── ui/              # Reusable UI components
-│   ├── forms/           # Form components
-│   └── layout/          # Layout components
-├── lib/
-│   ├── auth.ts          # Auth utilities
-│   ├── db.ts            # Database connection
-│   └── utils.ts         # General utilities
-├── prisma/
-│   └── schema.prisma    # Database schema
-├── public/              # Static assets
-└── types/               # TypeScript definitions
-```
-
-## Getting Started
-
-### Prerequisites
-- Node.js 18 or higher (recommend using [nvm](https://github.com/nvm-sh/nvm) for version management)
-- npm or yarn package manager
-- MongoDB Atlas account or local instance
-- OAuth credentials for Google or GitHub (optional for social authentication)
-
-### Setup Instructions
-Follow these steps to run Observer locally and contribute to its development.
-
-1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/yuvrajprajapatii/observer-project.git
-   cd observer-project
-   ```
-
-2. **Install Dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Configure Environment Variables**
-   ```bash
-   cp .env.example .env
-   ```
-   Update `.env` with your database URI, OAuth secrets, and other configurations.
-
-<details>
-<summary>Troubleshooting Environment Setup</summary>
-
-Common issues include invalid MongoDB URIs or missing API keys. Verify connections with:
-```bash
-npx prisma db pull  # Sync schema with database
-```
-Refer to [Prisma documentation](https://www.prisma.io/docs) for advanced configuration.
-
-</details>
-
-4. **Initialize Database**
-   ```bash
-   npx prisma generate
-   npx prisma db push
-   ```
-
-5. **Launch Development Server**
-   ```bash
-   npm run dev
-   ```
-   Access the application at [http://localhost:3000](http://localhost:3000).
-
-<details>
-<summary>Advanced Commands</summary>
-
-- Build for production: `npm run build`
-- Run tests: `npm run test` (test suite forthcoming in Phase 2)
-- Lint code: `npm run lint`
-
-</details>
-
-## Core Features
-
-Observer's features are designed to deliver immediate value while scaling toward broader impact.
-
-### Implemented
-- Secure user authentication supporting email, Google, and GitHub providers
-- Responsive, accessible design system built with Tailwind CSS
-- Comprehensive database models for users, interests, and profiles
-- Modular API architecture for efficient data handling
-
-### In Development
-- Interactive interest discovery assessments powered by AI
-- Personalized career recommendations integrating global job market data
-- Dynamic learning roadmaps with milestone tracking
-- Curated resource aggregation from trusted educational sources
-
-### Planned
-- Multilingual interface to serve diverse global audiences
-- AI-matched mentorship connections for guided growth
-- Analytics dashboard for progress monitoring and impact measurement
-- Parental oversight tools with consent and reporting features
-
-<details>
-<summary>Feature Roadmap Timeline</summary>
-
-| Feature Category | Q4 2025 | Q1 2026 | Q2 2026 |
-|------------------|---------|---------|---------|
-| **Core AI Engine** | Profiling | Recommendations | Synergy Mapping |
-| **User Experience** | Dashboard | Roadmaps | Analytics |
-| **Global Reach** | English UI | Multi-Language | Localization |
-
-This timeline aligns with our commitment to iterative releases that prioritize user feedback and measurable outcomes.
-
-</details>
-
-## Security and Privacy
-Security is foundational to Observer's trust model, ensuring user data fuels empowerment, not exploitation.
-
-- **Credential Management:** Sensitive data confined to environment variables, excluded from version control via `.gitignore`.
-- **Data Protection:** Encryption at rest with MongoDB's enterprise-grade features.
-- **Session Integrity:** NextAuth.js provides JWT-based, tamper-resistant authentication.
-- **Compliance Measures:** Built-in parental consent for minors; GDPR-aligned data portability and deletion (Phase 3).
-- **Audit Readiness:** Logging and monitoring integrated for transparency.
-
-*Development Note:* Production hardening includes rate limiting, input sanitization, and third-party audits.
-
-## Contributing
-Observer is a solo-led initiative by Yuvraj Prajapati, focused on rapid prototyping and validation. Upon stable release (Q1 2026), we will open contributions to amplify our impact.
-
-- **Collaboration Opportunities:** If your expertise in AI, education, or full-stack development aligns with our mission, [contact us](https://yuvrajprajapati.com) to discuss partnerships.
-- **Guidelines:** Adhere to GitHub's fork-branch-PR workflow. Detailed instructions in [CONTRIBUTING.md](https://github.com/yuvrajprajapatii/observer-project/blob/main/CONTRIBUTING.md) (available post-release).
-
-By contributing, you join a movement to reshape educational equity.
-
-## License
-  
-This project is licensed under the MIT license.
-
-See the [LICENSE](LICENSE) file for the complete terms and conditions.
-
-Copyright © 2025 Yuvraj Prajapati  
-
-
-## Support
-We are committed to fostering a supportive community around Observer.
-
-- **Report Issues:** [Submit a GitHub Issue](https://github.com/yuvrajprajapatii/observer-project/issues/new)
-- **General Inquiries:** Explore the [project documentation](https://yuvrajprajapati.com/projects) or email support@yuvrajapati.com
-- **Stay Informed:** Follow updates on [GitHub Releases](https://github.com/yuvrajprajapatii/observer-project/releases) or connect via [LinkedIn](https://linkedin.com/in/yuvrajprajapati).
-
-### Our Broader Mission
-Discover the full narrative of Observer's drive to advance global education equity in our [dedicated project overview](https://yuvrajprajapati.com/projects).
+**Current Stage**: Alpha (Phase 1 - Foundation Building)  
+**Target Users**: Students aged 10-24 seeking career exploration  
+**Launch Timeline**: Phase 2 (AI features) targeting Q2 2026
 
 ---
 
-**Join the Observer mission: Together, we can empower the next generation of changemakers.**  
-Developed by [Yuvraj Prajapati](https://yuvrajprajapati.com) | Last Updated: October 28, 2025
+## The Problem We're Addressing
+
+Career guidance and access to high-quality learning resources remain severely limited for millions of students worldwide, particularly those from rural and underprivileged backgrounds. Our research shows that these students not only lack mentorship and structured counseling but also miss out on exposure to the world’s best free learning resources—the same open courses, research tools, and digital platforms that empower learners in affluent regions to thrive.
+
+This lack of access creates a widening divide: countless talented and curious minds are left behind, unable to explore their true interests or develop the skills demanded by modern industries. As a result, we lose a generation of potential innovators, thinkers, and problem-solvers—not because they lack ability, but because they were never connected to the right opportunities at the right time.
+
+Observer is designed to change this. By leveraging technology and data-driven personalization, our platform identifies each learner’s evolving interests and connects them with curated, world-class, and entirely free educational resources—from MIT OpenCourseWare and Khan Academy to cutting-edge AI and quantum computing repositories. Through adaptive learning pathways, personalized guidance, and community support, we aim to discover hidden talent, nurture it with the best knowledge available globally, and direct it toward meaningful careers.
+
+By democratizing access to the world’s finest learning resources and tailoring them to every learner’s unique curiosity, Observer not only uplifts individuals but also helps the world reclaim lost potential—fueling innovation, equity, and progress across all industries
+
+**Note**: Early claims about pilot results have been removed. We're currently gathering real user feedback in Phase 1.
+
+---
+
+## Our Approach
+
+Observer focuses on three core areas:
+
+1. **Foundation** (Phase 1 - Active): Secure authentication, database infrastructure, and basic profile management
+2. **Intelligence** (Phase 2 - Planned Q1-Q2 2026): AI-driven interest assessment and career recommendations
+3. **Experience** (Phase 3 - Planned 2026+): Advanced roadmap generation, learning resources, and mentorship matching
+
+Each phase is validated before moving forward. We're prioritizing **quality and security** over rapid feature launches.
+
+---
+
+## Current Status
+
+| Phase | Status | Key Features | Timeline |
+|---|---|---|---|
+| **Phase 1** | Active Development | ✅ User authentication (email, Google, GitHub) | Sep 2025 - Jan 2026 |
+| | | ✅ Database infrastructure (MongoDB + Prisma) | |
+| | | ✅ User profile management | |
+| | | ⏳ Security hardening & testing (in progress) | |
+| **Phase 2** | Planned | Interest assessment engine | Q1-Q2 2026 |
+| | | Career recommendation system | |
+| | | API documentation & tools | |
+| **Phase 3** | Future | Learning roadmaps & resources | 2026+ |
+| | | Mentorship matching | |
+| | | Multi-language support | |
+
+---
+
+## Technology Stack
+
+Carefully selected for reliability, scalability, and ease of development:
+
+| Component | Technology | Version | Reasoning |
+|---|---|---|---|
+| **Framework** | Next.js | 14+ | Modern React with built-in optimization |
+| **Database** | MongoDB + Prisma | Latest | Flexible schema with type safety |
+| **Authentication** | NextAuth.js | v5 (Auth.js) | Industry-standard OAuth/JWT handling |
+| **Styling** | Tailwind CSS | Latest | Utility-first CSS framework |
+| **Deployment** | Vercel | - | Seamless Next.js deployment |
+| **ORM** | Prisma | Latest | Strong typing, built-in validation |
+
+**Important**: NextAuth.js is at v5 (Auth.js). This uses modern OAuth 2.0 standards.
+
+
+---
+
+## Security Implementation
+
+### Current Protections (Phase 1)
+
+✅ **Authentication**
+- NextAuth.js handles OAuth 2.0 / JWT securely
+- Passwords hashed with bcrypt (via NextAuth)
+- Session tokens are httpOnly cookies
+
+✅ **Database**
+- MongoDB encryption at rest (Atlas)
+- Prisma ORM prevents SQL injection (N/A for NoSQL, but prevents operator injection via schema validation)
+
+✅ **Environment Variables**
+- Sensitive credentials in `.env.local` 
+
+
+### In Development (Phase 2)
+
+**Rate Limiting**: Protect against brute-force attacks  
+ **Input Sanitization**: Comprehensive validation across all endpoints  
+**CSRF Protection**: Enhanced cross-site request forgery defenses  
+ **Security Audit**: Third-party review before Phase 2 launch
+
+### Not Yet Implemented
+
+**Testing Suite**: Coming in Phase 2  
+**GDPR Compliance**: Parental consent for minors (Phase 3)  
+**Audit Logging**: Coming in Phase 2  
+
+**⚠️ Important**: This project is early-stage. Do not use with real student data until Phase 2 security hardening is complete.
+
+---
+
+## Roadmap & Timelines
+
+### Phase 1: Foundation (Sep 2025 - Jan 2026)
+
+**Goals**:
+- ✅ Secure authentication system
+- ✅ User profile management
+- 🔄 Comprehensive test suite (in progress)
+- 🔄 Security hardening (in progress)
+
+**Deliverables**: Production-ready authentication layer with documented API
+
+### Phase 2: Intelligence (Q1-Q2 2026)
+
+**Goals**:
+- Interest assessment questionnaire
+- Career recommendation engine (initial version)
+- Enhanced security & rate limiting
+- Full API documentation
+
+**Deliverables**: AI-driven features with user testing
+
+### Phase 3: Experience (2026+)
+
+**Goals**:
+- Personalized learning roadmaps
+- Resource aggregation
+- Mentorship matching
+- Multi-language support
+- GDPR & parental consent
+
+**Deliverables**: Production-ready platform for global use
+
+
+---
+
+## Sustainability & Team
+
+**Current Status**: Solo-led initiative by Yuvraj Prajapati
+
+**Future Plans**: 
+- Open contribution model planned for Q1 2026 (post-Phase 1 stabilization)
+- Seeking co-founders or technical partners interested in education + AI
+
+
+---
+
+## Security & Privacy
+
+### Data Protection
+
+- **In Transit**: HTTPS/TLS required; handled by Vercel
+- **At Rest**: MongoDB encryption enabled (Atlas)
+- **Access Control**: Role-based via session management
+
+### Privacy Commitments
+
+- User data is never sold or shared with third parties
+- OAuth credentials deleted after authentication
+- Users can request data deletion (subject to legal requirements)
+
+### Compliance Status
+
+| Standard | Status | Notes |
+|---|---|---|
+| **GDPR** | Phase 3 | Parental consent & data portability planned |
+| **FERPA** | Not Compliant |  Only outside regulated education environments |
+| **COPPA** | Phase 3 | Parental consent for <13 not yet implemented |
+
+**⚠️ Legal**: Don't process student data from FERPA-regulated institutions until compliance is certified.
+
+---
+
+## Contributing
+
+### Current Stage
+
+Observer is pre-1.0 and not yet accepting external contributions. However, we welcome:
+
+- **Bug Reports**: Submit via GitHub Issues
+- **Feature Ideas**: Discuss in Discussions section
+
+### Future Contribution Guidelines
+
+Detailed contribution guidelines will be published when accepting external PRs (planned Q1 2026).
+
+### Collaboration Opportunities
+
+Interested in partnering on Observer?
+
+- **AI/ML Specialists**: Help build recommendation engine
+- **Education Experts**: Advise on career pathway data
+- **Security Engineers**: Conduct audits, improve hardening
+- **Product Designers**: UX/UI improvements
+
+**Contact**: Yuvraj Prajapati | [contact us](https://yuvrajprajapati.com)
+
+---
+
+
+## Performance & Scalability
+
+### Current Metrics
+
+- **Response Time**: 200-500ms for authenticated endpoints (development)
+- **Database**: Single MongoDB Atlas cluster (free tier)
+- **Concurrent Users**: Estimated 100-500 (not load-tested yet)
+
+
+**Note**: Performance benchmarks coming after Phase 1 completion.
+
+---
+
+## License
+
+MIT License - See [LICENSE](LICENSE) file
+
+
+Copyright © 2025 Yuvraj Prajapati
+
+
+---
+
+## Support & Contact
+
+| Channel | Purpose |
+|---|---|
+| **GitHub Issues** | Bug reports, feature requests |
+| **Email** | [Email me](mailto:yuvrajxconnect@gmail.com) |
+
+
+---
+
+## Project Status Summary
+
+**TL;DR**: Observer is a carefully built but early-stage platform exploring AI-powered career guidance. We're focused on:
+
+1. **Security First**: Building trust with students and parents
+2. **Honest Roadmap**: Realistic timelines, no hype
+3. **Quality Over Speed**: Thorough testing before features ship
+
+
+**Join the conversation**: Follow updates on GitHub Releases or connect via email.
+
+---
+
+## Changelog
+
+**v0.1.0-alpha** (October 2025)
+- Initial project setup
+- Authentication system (email, Google, GitHub)
+- User profile management
+- Database schema foundation
+
+**Next**: Security hardening (January 2026)
+
+---
+
+**Last Updated**: October 28, 2025  
+**Maintained By**: Yuvraj Prajapati  
+
+> Thank you
