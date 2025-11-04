@@ -24,7 +24,6 @@ Observer is designed to change this. By leveraging technology and data-driven pe
 
 By democratizing access to the world’s finest learning resources and tailoring them to every learner’s unique curiosity, Observer not only uplifts individuals but also helps the world reclaim lost potential—fueling innovation, equity, and progress across all industries
 
-**Note**: Early claims about pilot results have been removed. We're currently gathering real user feedback in Phase 1.
 
 ---
 
