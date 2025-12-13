@@ -150,7 +150,7 @@ Carefully selected for reliability, scalability, and ease of development:
 
 **Future Plans**: 
 - Open contribution model planned for Q1 2026 (post-Phase 1 stabilization)
-- Seeking co-founders or technical partners interested in education + AI
+- Seeking technical partners interested in education + AI
 
 
 ---
